@@ -37,7 +37,7 @@ namespace cAlgo
         /// <summary>
         /// La versione del prodotto, progressivo, utilie per controllare gli aggiornamenti se viene reso disponibile sul sito ctrader.guru
         /// </summary>
-        public const string VERSION = "1.0.3";
+        public const string VERSION = "1.0.4";
 
         #endregion
 
@@ -49,7 +49,7 @@ namespace cAlgo
         [Parameter(NAME + " " + VERSION, Group = "Identity", DefaultValue = "https://ctrader.guru/product/force-index/")]
         public string ProductInfo { get; set; }
 
-        [Parameter("Period", Group = "Params", DefaultValue = 14)]
+        [Parameter("Period", Group = "Params", DefaultValue = 14, MinValue = 1, Step = 1)]
         public int Period { get; set; }
 
         /// <summary>
@@ -86,7 +86,7 @@ namespace cAlgo
         public override void Calculate(int index)
         {
             
-            Result[index] = Bars.TickVolumes[index] * ( Bars.ClosePrices[ index ] - Bars.ClosePrices[ index - 1 ] );
+            Result[index] = Bars.TickVolumes[index] * ( Bars.ClosePrices[ index ] - Bars.ClosePrices[ index - Period ] );
             
         }
 
